@@ -7,12 +7,24 @@
 int main(void){
 
         void sigtstp_handler(int sig);
+	void sigint_handler(int sig);
+	void sigquit_handler(int sig);
         char s[200];
 
         if(signal(SIGTSTP,sigtstp_handler) == SIG_ERR){
                 perror("signal");
                 exit(1);
         }
+
+	if(signal(SIGINT,sigint_handler) == SIG_ERR){
+		perror("signal");
+		exit(1);
+	}
+
+	if(signal(SIGQUIT,sigquit_handler) == SIG_ERR){
+		perror("signal");
+		exit(1);
+	}
 
         printf("Enter a string:\n");
 
@@ -28,3 +40,13 @@ int main(void){
         {
                 printf("This is a special signal handler for sigtstp.\n");
         }
+	
+	void sigint_handler(int sig)
+	{
+		printf("This is a special signal handler for sigint.\n");
+	}
+
+	void sigquit_handler(int sig)
+	{
+		printf("This is a special signal handler for sigquit.\n");
+	}
